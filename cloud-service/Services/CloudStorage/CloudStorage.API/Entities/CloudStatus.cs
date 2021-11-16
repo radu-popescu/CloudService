@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CloudStorage.API.Entities
 {
-    public class RobotStatus
+    public class CloudStatus
     {
         public string Key { get; set; }
 
@@ -17,23 +17,19 @@ namespace CloudStorage.API.Entities
 
         public string Idle { get; set; }
 
-        public string Battery { get; set; }
-
-        public string CurrentTask { get; set; }
-
-        public string Timestamp 
+        public string Timestamp
         {
-            get 
+            get
             {
                 string value = DateTime.UtcNow.ToString("{dd/MM/yy H:mm:ss}");
 
-                return value;   
+                return value;
             }
         }
 
-        public RobotStatus() { }
+        public CloudStatus() { }
 
-        public RobotStatus(string key)
+        public CloudStatus(string key)
         {
             key = Key;
         }

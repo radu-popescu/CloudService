@@ -11,29 +11,30 @@ namespace CloudStorage.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class CloudStorageController : ControllerBase
+    public class RobotStatusController : ControllerBase
     {
         private readonly ICloudStorageRepository _repository;
 
-        public CloudStorageController(ICloudStorageRepository repository)
+        public RobotStatusController(ICloudStorageRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
 
+        //RobotStatus
         [HttpGet("{key}", Name = "GetRobotStatus")]
         [ProducesResponseType(typeof(RobotStatus),(int)HttpStatusCode.OK)]
         public async Task<ActionResult<RobotStatus>> GetRobotStatus(string key) 
         {
-            RobotStatus status = await _repository.GetRobotStatus(key);
-            return Ok(status ?? new RobotStatus(key));
+            RobotStatus robotStatus = await _repository.GetRobotStatus(key);
+            return Ok(robotStatus ?? new RobotStatus(key));
         }
 
-        [HttpPost]
+        [HttpPost(Name = "UpdateRobotStatus")]
         [ProducesResponseType(typeof(RobotStatus), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<RobotStatus>> UpdateRobotStatus([FromBody] RobotStatus status)
+        public async Task<ActionResult<RobotStatus>> UpdateRobotStatus([FromBody] RobotStatus robotStatus)
         {
-            return Ok(await _repository.UpdateRobotStatus(status));
+            return Ok(await _repository.UpdateRobotStatus(robotStatus));
         }
 
         [HttpDelete("{key}", Name = "DeleteRobotStatus")]
@@ -43,6 +44,8 @@ namespace CloudStorage.API.Controllers
             await _repository.DeleteRobotStatus(key);
             return Ok();
         }
+
+        
 
     }
 }

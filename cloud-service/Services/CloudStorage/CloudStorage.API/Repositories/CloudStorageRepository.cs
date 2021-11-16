@@ -12,18 +12,21 @@ namespace CloudStorage.API.Repositories
     {
         private readonly IDistributedCache _redisCache;
 
+        
+
         public CloudStorageRepository(IDistributedCache redisCache)
         {
             _redisCache = redisCache ?? throw new ArgumentNullException(nameof(redisCache));
         }
 
+        //RobotStatus
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
-            string status = await _redisCache.GetStringAsync(key);
-            if (String.IsNullOrEmpty(status))
+            string robotStatus = await _redisCache.GetStringAsync(key);
+            if (String.IsNullOrEmpty(robotStatus))
                 return null;
 
-            return JsonConvert.DeserializeObject<RobotStatus>(status);
+            return JsonConvert.DeserializeObject<RobotStatus>(robotStatus);
 
         }
 
@@ -39,5 +42,27 @@ namespace CloudStorage.API.Repositories
             await _redisCache.RemoveAsync(key);
         }
 
+        //CloudStatus
+        public async Task<CloudStatus> GetCloudStatus(string key)
+        {
+            string cloudStatus = await _redisCache.GetStringAsync(key);
+            if (String.IsNullOrEmpty(cloudStatus))
+                return null;
+
+            return JsonConvert.DeserializeObject<CloudStatus>(cloudStatus);
+
+        }
+
+        public async Task<CloudStatus> UpdateCloudStatus(CloudStatus cloudStatus)
+        {
+            await _redisCache.SetStringAsync(cloudStatus.Key, JsonConvert.SerializeObject(cloudStatus));
+
+            return await GetCloudStatus(cloudStatus.Key);
+        }
+
+        public async Task DeleteCloudStatus(string key)
+        {
+            await _redisCache.RemoveAsync(key);
+        }
     }
 }
