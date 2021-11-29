@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RedisJson.API.Entities
+namespace RedisHash.API.Entities
 {
-    public class CloudStatus
+    public class RobotStatus
     {
         public string Key { get; set; }
 
@@ -17,6 +17,10 @@ namespace RedisJson.API.Entities
 
         public string Idle { get; set; }
 
+        public string Battery { get; set; }
+
+        public string CurrentTask { get; set; }
+
         public string Timestamp
         {
             get
@@ -27,9 +31,9 @@ namespace RedisJson.API.Entities
             }
         }
 
-        public CloudStatus() { }
+        public RobotStatus() { }
 
-        public CloudStatus(string key)
+        public RobotStatus(string key)
         {
             key = Key;
         }

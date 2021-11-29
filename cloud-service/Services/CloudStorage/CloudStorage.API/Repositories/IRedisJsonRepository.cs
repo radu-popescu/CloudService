@@ -1,12 +1,12 @@
-﻿using CloudStorage.API.Entities;
+﻿using RedisJson.API.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudStorage.API.Repositories
+namespace RedisJson.API.Repositories
 {
-    public interface ICloudStorageRepository
+    public interface IRedisJsonRepository
     {
         //RobotStatus
         Task<RobotStatus> GetRobotStatus(string key);

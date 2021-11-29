@@ -1,5 +1,5 @@
-﻿using CloudStorage.API.Entities;
-using CloudStorage.API.Repositories;
+﻿using RedisJson.API.Entities;
+using RedisJson.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,15 +7,15 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CloudStorage.API.Controllers
+namespace RedisJson.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
     public class CloudStatusController : ControllerBase
     {
-        private readonly ICloudStorageRepository _repository;
+        private readonly IRedisJsonRepository _repository;
 
-        public CloudStatusController(ICloudStorageRepository repository)
+        public CloudStatusController(IRedisJsonRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }

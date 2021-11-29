@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudStorage.API.Entities
+namespace RedisJson.API.Entities
 {
     public class RobotStatus
     {

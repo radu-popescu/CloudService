@@ -1,4 +1,4 @@
-﻿using CloudStorage.API.Entities;
+﻿using RedisJson.API.Entities;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CloudStorage.API.Repositories
+namespace RedisJson.API.Repositories
 {
-    public class CloudStorageRepository : ICloudStorageRepository
+    public class RedisJsonRepository : IRedisJsonRepository
     {
         private readonly IDistributedCache _redisCache;
 
         
 
-        public CloudStorageRepository(IDistributedCache redisCache)
+        public RedisJsonRepository(IDistributedCache redisCache)
         {
             _redisCache = redisCache ?? throw new ArgumentNullException(nameof(redisCache));
         }

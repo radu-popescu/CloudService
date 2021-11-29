@@ -1,4 +1,3 @@
-using RedisJson.API.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,12 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RedisHash.API.Repositories;
+using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RedisJson.API
+namespace RedisHash.API
 {
     public class Startup
     {
@@ -26,18 +27,20 @@ namespace RedisJson.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
             });
 
-            services.AddScoped<IRedisJsonRepository, RedisJsonRepository>();
+            var multiplexer = ConnectionMultiplexer.Connect("localhost:6376");
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
+
+            services.AddScoped<IRedisHashRepository, RedisHashRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedisJson.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RedisHash.API", Version = "v1" });
             });
         }
 
@@ -48,7 +51,7 @@ namespace RedisJson.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RedisJson.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RedisHash.API v1"));
             }
 
             app.UseRouting();
