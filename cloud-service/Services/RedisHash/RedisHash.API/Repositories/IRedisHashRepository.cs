@@ -11,7 +11,7 @@ namespace RedisHash.API.Repositories
     {
         //RobotStatus
 
-        Task<RedisValue[]> GetRobotStatus(string key);
+        Task<RobotStatus> GetRobotStatus(string key);
 
         Task<RobotStatus> UpdateRobotStatus(RobotStatus robotStatus);
 

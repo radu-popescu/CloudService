@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using StackExchange.Redis;
+using Newtonsoft.Json;
+using System.Reflection;
+
 
 namespace RedisHash.API.Repositories
 {
@@ -21,18 +24,35 @@ namespace RedisHash.API.Repositories
         }
 
 
-        public async Task<RedisValue[]> GetRobotStatus(string key)
+        public async Task<RobotStatus> GetRobotStatus(string key)
         {
-            //RobotStatus robotStatus = new RobotStatus();
-            //robotStatus.Key = key;
 
+            RobotStatus robotStatus = new RobotStatus();
             var db = _redis.GetDatabase();
-            RedisValue[] hashValue = await db.HashValuesAsync(key);
 
-            //hashValue = robotStatus.GetType().GetProperties();
-            
-            return hashValue;
-           
+            HashEntry[] hashValues = await db.HashGetAllAsync(key);
+            Type robotStatusType = robotStatus.GetType();
+
+            PropertyInfo[] properties = robotStatusType.GetProperties();
+            foreach (var hashValue in hashValues)
+            {
+                string name = hashValue.Name.ToString();
+                PropertyInfo propInfo = properties.FirstOrDefault(p => p.Name.ToLower() == name.ToLower());
+                
+                if (propInfo == null)
+                {
+                    continue;
+                }
+                else if (propInfo.PropertyType == typeof(string))
+                {
+                    propInfo.SetValue(robotStatus, (string)hashValue.Value);
+                }
+                else if ( propInfo.PropertyType == typeof(bool)) 
+                {
+                    propInfo.SetValue(robotStatus, Convert.ToBoolean(hashValue.Value));
+                }
+            }
+            return robotStatus;
         }
 
         public Task<RobotStatus> UpdateRobotStatus(RobotStatus robotStatus)
@@ -44,5 +64,7 @@ namespace RedisHash.API.Repositories
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

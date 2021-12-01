@@ -24,11 +24,11 @@ namespace RedisHash.API.Controllers
 
         //RobotStatus
         [HttpGet("{key}", Name = "GetRobotStatus")]
-        [ProducesResponseType(typeof(RedisValue[]), (int)HttpStatusCode.OK)]
-        public async Task<string> GetRobotStatus(string key)
+        [ProducesResponseType(typeof(RobotStatus), (int)HttpStatusCode.OK)]
+        public async Task<RobotStatus> GetRobotStatus(string key)
         {
-            RedisValue[] hashValue = await _repository.GetRobotStatus(key);
-            return JsonConvert.SerializeObject(hashValue);
+            RobotStatus robotStatus = await _repository.GetRobotStatus(key);
+            return robotStatus; //?? new RobotStatus(key); 
         }
     }
 }

@@ -24,7 +24,7 @@ namespace RedisGraph.API.Repositories
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
             RobotStatus robotStatus = new RobotStatus();
-            robotStatus.Key = key;
+            //robotStatus.Key = key;
             ResultSet resultSet = await _redisGraph.Query(key, "MATCH (s:status) RETURN s.actorid, s.active, s.poweroff, s.idle, s.battery, s.currenttask");
             foreach(var res in resultSet.Results)
             {
@@ -52,14 +52,14 @@ namespace RedisGraph.API.Repositories
                     if (res.Key == "s.poweroff")
                         robotStatus.PowerOff = boolVal.Value;
                 }
-                else if (val is ScalarResult<int> intVal) 
+                /*else if (val is ScalarResult<int> intVal) 
                 {
                     continue;
                 }
                 else if (val is ScalarResult<double> doubleVal)
                 {
                     continue;
-                }
+                }*/
             }
             return robotStatus;
         }

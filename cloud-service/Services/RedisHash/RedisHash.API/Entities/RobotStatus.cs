@@ -7,7 +7,7 @@ namespace RedisHash.API.Entities
 {
     public class RobotStatus
     {
-        public string Key { get; set; }
+        //public string Key { get; set; }
 
         public string ActorId { get; set; }
 
@@ -33,9 +33,9 @@ namespace RedisHash.API.Entities
 
         public RobotStatus() { }
 
-        public RobotStatus(string key)
+        /*public RobotStatus(string key)
         {
             key = Key;
-        }
+        }*/
     }
 }
