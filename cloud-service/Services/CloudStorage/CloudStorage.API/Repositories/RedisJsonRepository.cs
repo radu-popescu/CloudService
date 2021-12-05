@@ -33,9 +33,9 @@ namespace RedisJson.API.Repositories
 
         /*
          * Implementation of GET method
-         * @param string key
-         * @param robotStatus object
-         * @param db connection with db
+         * <param> string key
+         * <param> robotStatus object
+         * <param> db connection with db
          */
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
@@ -65,8 +65,8 @@ namespace RedisJson.API.Repositories
 
         /*
          * Implementation for DELETE method.
-         * @param string key
-         * @param db connection with db
+         * <param> string key
+         * <param> db connection with db
          */
         public async Task DeleteRobotStatus(string key)
         {

@@ -9,8 +9,8 @@ namespace RedisJson.API.Repositories
     /*
      * This interface will acomodate the signatures of the functions required for the crud operations, 
      * -no implementation required.
-     * @param string key
-     * @param robotStatus object instance
+     * <param> string key
+     * <param> robotStatus object instance
      */
     public interface IRedisJsonRepository
     {
