@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StackExchange.Redis;
 
 namespace RedisJson.API
 {
@@ -31,6 +32,9 @@ namespace RedisJson.API
             {
                 options.Configuration = Configuration.GetValue<string>("CacheSettings:ConnectionString");
             });
+
+            var multiplexer = ConnectionMultiplexer.Connect("localhost:6378");
+            services.AddSingleton<IConnectionMultiplexer>(multiplexer);
 
             services.AddScoped<IRedisJsonRepository, RedisJsonRepository>();
 

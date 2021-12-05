@@ -24,7 +24,6 @@ namespace RedisGraph.API.Repositories
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
             RobotStatus robotStatus = new RobotStatus();
-            //robotStatus.Key = key;
             ResultSet resultSet = await _redisGraph.Query(key, "MATCH (s:status) RETURN s.actorid, s.active, s.poweroff, s.idle, s.battery, s.currenttask");
             foreach(var res in resultSet.Results)
             {
