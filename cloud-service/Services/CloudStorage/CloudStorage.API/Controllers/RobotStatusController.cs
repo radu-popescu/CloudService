@@ -31,8 +31,8 @@ namespace RedisJson.API.Controllers
 
         /*
          * RobotStatus GET method implemented for transfering the data via web.
-         * @param string key
-         * @param robotStatus object
+         * <param> string key
+         * <param> robotStatus object
          */
         [HttpGet("{key}", Name = "GetRobotStatus")]
         [ProducesResponseType(typeof(RobotStatus),(int)HttpStatusCode.OK)]
@@ -52,7 +52,7 @@ namespace RedisJson.API.Controllers
 
         /*
          * Implementation for DELETE method.
-         * @param string key
+         * <param> string key
          * @field _repository
          */
         [HttpDelete("{key}", Name = "DeleteRobotStatus")]
