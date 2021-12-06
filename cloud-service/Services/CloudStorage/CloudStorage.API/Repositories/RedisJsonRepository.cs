@@ -10,19 +10,16 @@ using NReJSON;
 
 namespace RedisJson.API.Repositories
 {
-    /*
-     * In this class we implement the methods from the Interface.
-     * @field _redisCache (connection with cache memory)
-     * @field _redis (connection with redisJson)
-     */
+    /// <summary>
+    /// This class implements the methods from the IRedisJsonRepository
+    /// </summary>
     public class RedisJsonRepository : IRedisJsonRepository
     {
-        //asigning fields
+        
         private readonly IDistributedCache _redisCache;
-
         private readonly IConnectionMultiplexer _redis;
 
-        //initializing fields at startup
+       
         public RedisJsonRepository(IDistributedCache redisCache, IConnectionMultiplexer redis)
         {
             _redisCache = redisCache ?? throw new ArgumentNullException(nameof(redisCache));
@@ -31,29 +28,29 @@ namespace RedisJson.API.Repositories
 
 
 
-        /*
-         * Implementation of GET method
-         * <param> string key
-         * <param> robotStatus object
-         * <param> db connection with db
-         */
+        /// <summary>
+        /// Implementation of GET method
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>asynchronously a Task of type RobotStatus for the given key</returns>
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
-            //geting the data from the cache memory
             IDatabase db = _redis.GetDatabase();
-            
-            //geting the data record for the specified key 
+             
             string robotStatus = (string)await db.JsonGetAsync(key);
-            //checking if there is any data for the asigned key
             if (String.IsNullOrEmpty(robotStatus))
                 return null;
             
-            //returning and converting the result from the memory, for the given key
             return JsonConvert.DeserializeObject<RobotStatus>(robotStatus);
 
         }
 
-
+        /// <summary>
+        /// This method will cover CREATE and UPDATE operations
+        /// </summary>
+        /// <param name="robotStatus"></param>
+        /// <param name="key"></param>
+        /// <returns>asynchronously a Task of type RobotStatus for the given key</returns>
         public async Task<RobotStatus> UpdateRobotStatus(RobotStatus robotStatus, string key)
         {
             IDatabase db =  _redis.GetDatabase();
@@ -63,17 +60,15 @@ namespace RedisJson.API.Repositories
             return await GetRobotStatus(key);
         }
 
-        /*
-         * Implementation for DELETE method.
-         * <param> string key
-         * <param> db connection with db
-         */
+        /// <summary>
+        /// Implementation of DELETE method
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>deletes the record for the given key</returns>
         public async Task DeleteRobotStatus(string key)
         {
-            //geting the data from the cache memory
             IDatabase db = _redis.GetDatabase();
 
-            //deleting the robotstatus object for the given key
             await db.JsonDeleteAsync(key);
         }
 

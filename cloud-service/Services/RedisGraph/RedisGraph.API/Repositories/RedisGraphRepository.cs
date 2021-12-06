@@ -9,6 +9,9 @@ using StackExchange.Redis;
 
 namespace RedisGraph.API.Repositories
 {
+    /// <summary>
+    /// This class implements the methods from the IRedisGraphRepository
+    /// </summary>
     public class RedisGraphRepository : IRedisGraphRepository
     {
         //RedisGraphClient connectionMultiplexer = ;
@@ -21,17 +24,25 @@ namespace RedisGraph.API.Repositories
             //_redisGraph = redisGraph ?? throw new ArgumentNullException(nameof(redisGraph));
         }
 
+        /// <summary>
+        /// Implementation of GET method
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>asynchronously the robotStatus object with the adjusted resultSet from the Query</returns>
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
             RobotStatus robotStatus = new RobotStatus();
+            //query the db for the given key and storing the result in the resultSet object
             ResultSet resultSet = await _redisGraph.Query(key, "MATCH (s:status) RETURN s.actorid, s.active, s.poweroff, s.idle, s.battery, s.currenttask");
             foreach(var res in resultSet.Results)
             {
+                //maping each resultSet value into RedisGraphResult val in order to adjust each data type of the Query,
                 RedisGraphResult val = res.Value.FirstOrDefault();
                 if (val is null)
                 {
                     continue;
                 }
+                //checking for value types and assigning them according to the properties of robotStatus object
                 if (val is ScalarResult<string> stringVal)
                 {
                     if (res.Key == "s.actorid")
@@ -62,22 +73,6 @@ namespace RedisGraph.API.Repositories
             }
             return robotStatus;
         }
-
-        /*public class ScalarResult<T> : RedisGraphResult
-        {
-            public ScalarResultType Type { get; set; }
-
-            public T Value { get; set; }
-        }
-
-        public enum ScalarResultType
-        {
-            Integer,
-            Null,
-            String,
-            Boolean,
-            Double,
-        }*/
 
         public Task<RobotStatus> UpdateRobotStatus(RobotStatus robotStatus)
         {

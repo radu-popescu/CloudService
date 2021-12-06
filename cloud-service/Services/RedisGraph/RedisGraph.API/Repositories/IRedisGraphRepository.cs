@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace RedisGraph.API.Repositories
 {
+    /// <summary>
+    /// This interface will acomodate the method-signatures of the methods required for the crud operations, 
+    /// -no implementation required.
+    /// </summary>
     public interface IRedisGraphRepository
     {
-        //RobotStatus
+        //RobotStatus CRUD operations
         Task<RobotStatus> GetRobotStatus(string key);
 
         Task<RobotStatus> UpdateRobotStatus(RobotStatus robotStatus);

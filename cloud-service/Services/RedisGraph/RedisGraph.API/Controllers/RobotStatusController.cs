@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace RedisGraph.API.Controllers
 {
+    /// <summary>
+    /// Exposing the API to the outside world through HTTP protocol
+    /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
     public class RobotStatusController : ControllerBase
@@ -20,7 +23,11 @@ namespace RedisGraph.API.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        //RobotStatus
+        /// <summary>
+        /// RobotStatus GET operation implemented for transfering the data via web.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>asynchronously a Task of type RobotStatus for the given key</returns>
         [HttpGet("{key}", Name = "GetRobotStatus")]
         [ProducesResponseType(typeof(RobotStatus), (int)HttpStatusCode.OK)]
         public async Task<RobotStatus> GetRobotStatus(string key)

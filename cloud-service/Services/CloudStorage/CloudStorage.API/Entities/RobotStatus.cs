@@ -5,16 +5,11 @@ using System.Threading.Tasks;
 
 namespace RedisJson.API.Entities
 {
-    /*
-     * This class will be used to accomodate the data required the robot entity
-     */
+    /// <summary>
+    /// This class will be used to accomodate the data required the RobotStatus entity
+    /// </summary>
     public class RobotStatus
     {
-        //initializing an empty constructor for this class
-        public RobotStatus() { }
-
-        //setting the properties of the entity
-
         //public string Key { get; set; }
 
         public string ActorId { get; set; }
@@ -27,9 +22,8 @@ namespace RedisJson.API.Entities
 
         public string Battery { get; set; }
 
-        public string CurrentTask { get; set; }
+        public string CurrentTask { get; set; } 
 
-        //initializing a timestamp for each object of this class
         public string Timestamp 
         {
             get 
@@ -40,7 +34,7 @@ namespace RedisJson.API.Entities
             }
         }
 
-        //public RobotStatus() { }
+        public RobotStatus() { }
 
         /*public RobotStatus(string key)
         {

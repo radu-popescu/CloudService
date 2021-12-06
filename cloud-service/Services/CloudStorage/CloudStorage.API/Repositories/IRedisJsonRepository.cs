@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace RedisJson.API.Repositories
 {
-    /*
-     * This interface will acomodate the signatures of the functions required for the crud operations, 
-     * -no implementation required.
-     * <param> string key
-     * <param> robotStatus object instance
-     */
+    /// <summary>
+    /// This interface will acomodate the method-signatures of the methods required for the crud operations, 
+    /// -no implementation required.
+    /// </summary>
     public interface IRedisJsonRepository
     {
         //RobotStatus CRUD operations.

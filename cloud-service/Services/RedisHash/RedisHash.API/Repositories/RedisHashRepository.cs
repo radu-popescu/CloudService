@@ -11,6 +11,9 @@ using System.Reflection;
 
 namespace RedisHash.API.Repositories
 {
+    /// <summary>
+    /// This class implements the methods from the IRedisHashRepository
+    /// </summary>
     public class RedisHashRepository : IRedisHashRepository
     {
         private readonly IDistributedCache _redisCache;
@@ -23,16 +26,22 @@ namespace RedisHash.API.Repositories
             _redis = redis ?? throw new ArgumentNullException(nameof(redis));
         }
 
-
+        /// <summary>
+        /// Implementation of GET method
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns>asynchronously a Task of type RobotStatus for the given key</returns>
         public async Task<RobotStatus> GetRobotStatus(string key)
         {
 
             RobotStatus robotStatus = new RobotStatus();
-            var db = _redis.GetDatabase();
+            IDatabase db = _redis.GetDatabase();
 
+            //getting the properties and values from redis hash db
             HashEntry[] hashValues = await db.HashGetAllAsync(key);
             Type robotStatusType = robotStatus.GetType();
 
+            //getting the properties from robotStatus entity and mapping the to the hashValues from the db
             PropertyInfo[] properties = robotStatusType.GetProperties();
             foreach (var hashValue in hashValues)
             {

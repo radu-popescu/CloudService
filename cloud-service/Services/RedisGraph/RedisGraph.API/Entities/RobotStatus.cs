@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace RedisGraph.API.Entities
 {
+    /// <summary>
+    /// This class will be used to accomodate the data required the RobotStatus entity
+    /// </summary>
     public class RobotStatus
     {
         //public string Key { get; set; }
